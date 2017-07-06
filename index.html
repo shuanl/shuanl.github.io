@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>测试</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width,">
+<style>
+	*{margin: 0; padding: 0;}
+	#box{
+		position: relative;
+		width: 400px;
+		height: 200px;
+		border: 20px dotted #666;
+		margin: 50px auto 0;
+		box-sizing: border-box;
+	}
+	#msg{
+		font-size: 60px;
+		text-align: center;
+		line-height: 160px;
+		color: red;
+	}
+	#cvs{
+		position: absolute;
+		left: -20px;
+		top: -20px;
+	}
+</style>
+</head>
+<body>
+<div id="box">
+	<h1 id="msg">一等奖</h1>
+	<canvas id="cvs" width="400" height="200"></canvas>
+</div>
+
+<script>
+var box=document.getElementById('box');
+var msg=document.getElementById('msg');
+var cvs=document.getElementById('cvs');
+var ctx=cvs.getContext('2d');
+var arr=['谢谢惠顾','一等奖','再来一瓶','二等奖','三等奖','白喝半年'];
+var n=Math.floor(Math.random()*arr.length);
+msg.innerHTML=arr[n];
+ctx.beginPath();
+ctx.fillStyle='#ccc';
+ctx.fillRect(0,0,400,200);
+ctx.closePath();
+ctx.globalCompositeOperation='destination-out';
+cvs.onmousedown=function (e){
+	var x=e.clientX-box.offsetLeft;
+	var y=e.clientY-box.offsetTop;
+	document.onmousemove=function (e){
+		x=e.clientX-box.offsetLeft;
+		y=e.clientY-box.offsetTop;
+		ctx.beginPath();
+		ctx.arc(x,y,10,0,2*Math.PI,true);
+		ctx.fillStyle='pink';
+		ctx.fill();
+	}
+	document.onmouseup=function (){
+		document.onmousemove=null;
+	}
+	ctx.closePath();
+}
+
+</script>
+</body>
+</html>
